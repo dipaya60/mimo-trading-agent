@@ -4,172 +4,107 @@
 <meta charset="utf-8">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0d1117; color: #c9d1d9; font-family: 'SF Mono', 'Fira Code', monospace; padding: 30px; width: 1200px; }
-.telegram { background: #17212b; border: 1px solid #2b3a4a; border-radius: 16px; max-width: 480px; margin: 0 auto; overflow: hidden; }
-.tg-header { background: #1e2c3a; padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
-.tg-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #58a6ff, #d2a8ff); display: flex; align-items: center; justify-content: center; font-size: 20px; }
-.tg-name { color: #e6edf3; font-weight: bold; font-size: 15px; }
-.tg-status { color: #3fb950; font-size: 12px; }
-.tg-chat { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
-.msg-user { align-self: flex-end; background: #2b5278; color: #e6edf3; padding: 8px 14px; border-radius: 12px 12px 4px 12px; max-width: 75%; font-size: 13px; }
-.msg-bot { align-self: flex-start; background: #182533; color: #c9d1d9; padding: 8px 14px; border-radius: 12px 12px 12px 4px; max-width: 85%; font-size: 13px; line-height: 1.5; }
-.msg-bot .bold { color: #e6edf3; font-weight: bold; }
-.msg-bot .green { color: #3fb950; }
-.msg-bot .red { color: #f85149; }
-.msg-bot .blue { color: #58a6ff; }
-.msg-bot .yellow { color: #d29922; }
-.msg-bot .purple { color: #d2a8ff; }
-.msg-bot code { background: #0d1117; color: #58a6ff; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
-.msg-bot .section { margin: 6px 0; padding: 6px 0; border-top: 1px solid #2b3a4a; }
-.msg-bot .bar { display: inline-block; background: #3fb950; height: 8px; border-radius: 4px; margin: 0 4px; }
-.msg-bot .bar-yellow { background: #d29922; }
-.msg-bot .bar-red { background: #f85149; }
-.msg-time { color: #8b949e; font-size: 10px; text-align: center; margin: 4px 0; }
+body { background: #0e1621; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+.telegram { background: #0e162b; width: 420px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.5); }
 
-.sidebar { position: fixed; top: 30px; right: 30px; width: 580px; }
-.title-section { text-align: center; margin-bottom: 20px; }
-.title-section h1 { color: #58a6ff; font-size: 20px; }
-.title-section p { color: #8b949e; font-size: 12px; margin-top: 4px; }
-.features { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-.feature { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 10px; }
-.feature .icon { font-size: 16px; }
-.feature .name { color: #e6edf3; font-weight: 600; font-size: 12px; }
-.feature .desc { color: #8b949e; font-size: 10px; }
-.commands { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 12px; }
-.commands h3 { color: #f0883e; font-size: 13px; margin-bottom: 8px; }
-.cmd-row { display: flex; gap: 8px; padding: 3px 0; font-size: 11px; }
-.cmd-row code { color: #58a6ff; min-width: 160px; }
-.cmd-row span { color: #8b949e; }
-.status-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 12px; }
-.status-item { display: flex; align-items: center; gap: 4px; font-size: 10px; }
-.dot-green { width: 6px; height: 6px; border-radius: 50%; background: #3fb950; }
-.footer { text-align: center; padding: 12px; color: #8b949e; font-size: 11px; }
-.footer a { color: #58a6ff; text-decoration: none; font-weight: bold; }
+/* Header */
+.tg-header { background: #1b2735; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+.tg-back { color: #6ab2f2; font-size: 18px; }
+.tg-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #58a6ff, #a78bfa); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.tg-info .name { color: #f5f5f5; font-size: 14px; font-weight: 600; }
+.tg-info .status { color: #6ab2f2; font-size: 12px; }
+.tg-dots { margin-left: auto; color: #6ab2f2; font-size: 18px; }
+
+/* Chat */
+.chat { padding: 8px 12px; display: flex; flex-direction: column; gap: 6px; min-height: 480px; }
+.time { text-align: center; color: #7e9bb5; font-size: 11px; margin: 6px 0; }
+.msg { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.45; }
+.msg-user { align-self: flex-end; background: #2b5278; color: #f5f5f5; border-bottom-right-radius: 4px; }
+.msg-bot { align-self: flex-start; background: #182533; color: #d4dae3; border-bottom-left-radius: 4px; }
+.b { color: #f5f5f5; font-weight: 600; }
+.g { color: #4ade80; }
+.r { color: #f87171; }
+.bl { color: #60a5fa; }
+.y { color: #facc15; }
+.p { color: #c084fc; }
+.sep { border-top: 1px solid #253443; margin: 5px 0; padding-top: 5px; }
+
+/* Input bar */
+.input-bar { background: #17212b; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+.input-bar .icon { color: #6e8898; font-size: 18px; }
+.input-field { flex: 1; background: #242f3d; border: none; border-radius: 20px; padding: 8px 14px; color: #8b9dae; font-size: 13px; }
+.input-bar .send { color: #6ab2f2; font-size: 18px; }
 </style>
 </head>
-<body style="display:flex;gap:30px;">
-
+<body>
 <div class="telegram">
   <div class="tg-header">
+    <span class="tg-back">‹</span>
     <div class="tg-avatar">🤖</div>
-    <div>
-      <div class="tg-name">MiMo Trading Agent</div>
-      <div class="tg-status">● online</div>
+    <div class="tg-info">
+      <div class="name">MiMo Trading Agent</div>
+      <div class="status">bot · online</div>
+    </div>
+    <span class="tg-dots">⋮</span>
+  </div>
+
+  <div class="chat">
+    <div class="time">Today, 14:32</div>
+
+    <div class="msg msg-user">/scan BTC ETH</div>
+
+    <div class="msg msg-bot">
+      <span class="r">🔴🔴</span> <span class="b">BTC</span>: STRONG_SELL<br>
+      $104,500 (<span class="r">-3.66%</span>) | RSI: 59<br>
+      Momentum: <span class="r">SELL</span> 61%<br>
+      Breakout: <span class="r">SELL</span> 50%
+      <div class="sep">
+        <span class="b">ETH</span>: HOLD<br>
+        $2,520 (<span class="r">-4.98%</span>) | RSI: 28<br>
+        ↔️ Regime: TRENDING_DOWN
+      </div>
+    </div>
+
+    <div class="msg msg-user">/trade ETH 10000</div>
+
+    <div class="msg msg-bot">
+      <span class="g">🟢</span> <span class="b g">BUY</span> <span class="b">ETH</span> (72%)<br>
+      Strong momentum: +7.2% with high volume<br><br>
+      Size: <span class="bl">$816</span> (8.2%)<br>
+      SL: <span class="r">$2,394</span> · TP: <span class="g">$2,772</span><br>
+      R:R: <span class="p">2.0x</span><br><br>
+      <span class="g">✅ LONG ETH opened</span>
+    </div>
+
+    <div class="msg msg-user">/risk 10000</div>
+
+    <div class="msg msg-bot">
+      <span class="g">🟢</span> <span class="b">Portfolio Risk: LOW</span> (24/100)<br><br>
+      Concentration <span class="y">██████████</span> 41<br>
+      Volatility <span class="g">████░░░░░░</span> 39<br>
+      Liquidity <span class="g">░░░░░░░░░░</span> 0<br>
+      Correlation <span class="g">██░░░░░░░░</span> 20<br><br>
+      VaR: <span class="r">$57</span> · Sharpe: <span class="g">1.52</span>
+    </div>
+
+    <div class="msg msg-user">/montecarlo 10000</div>
+
+    <div class="msg msg-bot">
+      🎲 <span class="b">Monte Carlo</span> $10,000 → 365 days<br><br>
+      Median: <span class="g">$11,252</span><br>
+      Best (P95): <span class="g">$31,225</span><br>
+      Worst (P5): <span class="r">$4,344</span><br><br>
+      Profit: <span class="g">59%</span> · Double: <span class="g">17%</span><br>
+      Ruin: <span class="r">7.6%</span>
     </div>
   </div>
-  <div class="tg-chat">
-    <div class="msg-time">Today, 14:32</div>
-    <div class="msg-user">/scan BTC ETH SOL</div>
-    <div class="msg-bot">
-      🔍 Scanning BTC, ETH, SOL...
-      <div class="section">
-        🔴🔴 <span class="bold">BTC</span>: STRONG_SELL<br>
-        Price: <span class="blue">$104,500</span> (<span class="red">-3.66%</span>) | RSI: 59<br>
-        Momentum: 🔴 SELL (61%)<br>
-        Mean Reversion: ⚪ HOLD (35%)<br>
-        Breakout: 🔴 SELL (50%)<br>
-        ↔️ Regime: RANGING → Mean Reversion
-      </div>
-      <div class="section">
-        ⚪ <span class="bold">ETH</span>: HOLD<br>
-        Price: <span class="blue">$2,520</span> (<span class="red">-4.98%</span>) | RSI: 28<br>
-        📉 Regime: TRENDING_DOWN → Momentum (Short)
-      </div>
-      <div class="section">
-        🟢🟢 <span class="bold">SOL</span>: STRONG_BUY<br>
-        Price: <span class="blue">$174</span> (<span class="green">+7.13%</span>) | RSI: 42<br>
-        📈 Regime: TRENDING_UP → Momentum
-      </div>
-    </div>
 
-    <div class="msg-user">/trade ETH 10000</div>
-    <div class="msg-bot">
-      📊 <span class="bold">ETH</span><br>
-      $2,520 (<span class="green">+7.2%</span>) | RSI: 52<br><br>
-      🟢 <span class="bold green">BUY</span> (72% confidence)<br>
-      💡 Strong momentum: +7.2% with high volume ($15B).<br><br>
-      📐 Size: <span class="blue">$816.30</span> (8.2%)<br>
-      🛑 SL: <span class="red">$2,394.00</span><br>
-      🎯 TP: <span class="green">$2,772.00</span><br>
-      📊 R:R: <span class="purple">2.0x</span><br><br>
-      ✅ <span class="bold green">LONG ETH</span> opened
-    </div>
-
-    <div class="msg-user">/risk 10000</div>
-    <div class="msg-bot">
-      🟢 <span class="bold">Portfolio Risk: LOW</span> (24/100)<br><br>
-      <span class="green">██████████</span> Concentration: 41/100<br>
-      <span class="yellow">████░░░░░░</span> Volatility: 39/100<br>
-      <span class="green">░░░░░░░░░░</span> Liquidity: 0/100<br>
-      <span class="green">██░░░░░░░░</span> Correlation: 20/100<br><br>
-      💰 VaR (95%): <span class="red">$57.38</span><br>
-      📉 Max DD: 36.0%<br>
-      📈 Sharpe: <span class="green">1.52</span>
-    </div>
-
-    <div class="msg-user">/montecarlo 10000</div>
-    <div class="msg-bot">
-      🎲 <span class="bold">Monte Carlo: $10,000</span> (365 days, 1000 runs)<br><br>
-      Median: <span class="green">$11,252</span><br>
-      P5 (worst): <span class="red">$4,344</span><br>
-      P95 (best): <span class="green">$31,225</span><br><br>
-      🟢 Profit: <span class="green">59.0%</span><br>
-      🟢 Double: <span class="green">17.0%</span><br>
-      🔴 Ruin: <span class="red">7.6%</span><br><br>
-      CAGR: <span class="green">+36.18%</span>
-    </div>
-
-    <div class="msg-user">/dca ETH 100</div>
-    <div class="msg-bot">
-      🟢🟢 <span class="bold green">Smart DCA: ETH</span><br><br>
-      Amount: <span class="blue">$400.00</span> @ $2,470<br>
-      💡 Deep dip (-2.0%, RSI 25) — aggressive DCA at $2,470
-    </div>
+  <div class="input-bar">
+    <span class="icon">😊</span>
+    <div class="input-field">Message</div>
+    <span class="icon">📎</span>
+    <span class="send">➤</span>
   </div>
 </div>
-
-<div class="sidebar">
-  <div class="title-section">
-    <h1>🤖 MiMo Trading Agent v2.0 — Telegram Interface</h1>
-    <p>Powered by Xiaomi MiMo-V2.5-Pro · Automated Trading + Portfolio Risk Management</p>
-  </div>
-
-  <div class="features">
-    <div class="feature"><span class="icon">🎯</span> <span class="name">3-Strategy Consensus</span><br><span class="desc">Momentum + Mean Reversion + Breakout vote</span></div>
-    <div class="feature"><span class="icon">🛡️</span> <span class="name">5-Dim Risk Manager</span><br><span class="desc">Concentration, Vol, Liquidity, Correlation, VaR</span></div>
-    <div class="feature"><span class="icon">📊</span> <span class="name">Backtesting Engine</span><br><span class="desc">4 strategies × 90 days, Sharpe, win rate, DD</span></div>
-    <div class="feature"><span class="icon">🎲</span> <span class="name">Monte Carlo (1000x)</span><br><span class="desc">Probability of profit, ruin, double capital</span></div>
-    <div class="feature"><span class="icon">📈</span> <span class="name">Regime Detection</span><br><span class="desc">Trending/Ranging/Volatile market analysis</span></div>
-    <div class="feature"><span class="icon">💰</span> <span class="name">Smart DCA</span><br><span class="desc">AI-enhanced buy-the-dip dollar cost averaging</span></div>
-    <div class="feature"><span class="icon">🤖</span> <span class="name">Auto Trading</span><br><span class="desc">Position sizing + stop-loss + take-profit</span></div>
-    <div class="feature"><span class="icon">📱</span> <span class="name">Telegram Bot</span><br><span class="desc">11 commands, real-time signals from phone</span></div>
-  </div>
-
-  <div class="commands">
-    <h3>📋 Bot Commands</h3>
-    <div class="cmd-row"><code>/scan BTC ETH SOL</code> <span>Multi-asset signal scan</span></div>
-    <div class="cmd-row"><code>/trade BTC 10000</code> <span>Auto-trade with capital</span></div>
-    <div class="cmd-row"><code>/risk 10000</code> <span>Portfolio risk analysis</span></div>
-    <div class="cmd-row"><code>/backtest BTC 90</code> <span>Backtest all strategies</span></div>
-    <div class="cmd-row"><code>/montecarlo 10000</code> <span>Monte Carlo simulation</span></div>
-    <div class="cmd-row"><code>/regime BTC</code> <span>Market regime detection</span></div>
-    <div class="cmd-row"><code>/dca ETH 100</code> <span>Smart DCA order</span></div>
-    <div class="cmd-row"><code>/portfolio</code> <span>Show open positions</span></div>
-    <div class="cmd-row"><code>/market</code> <span>Market overview (8 assets)</span></div>
-  </div>
-
-  <div class="status-bar">
-    <div class="status-item"><span class="dot-green"></span> MiMo-V2.5-Pro</div>
-    <div class="status-item"><span class="dot-green"></span> 3 Strategies</div>
-    <div class="status-item"><span class="dot-green"></span> Risk Manager</div>
-    <div class="status-item"><span class="dot-green"></span> Monte Carlo</div>
-    <div class="status-item"><span class="dot-green"></span> Telegram Bot</div>
-  </div>
-
-  <div class="footer">
-    📦 <a href="https://github.com/dipaya60/mimo-trading-agent">github.com/dipaya60/mimo-trading-agent</a> · Model: MiMo-V2.5-Pro
-  </div>
-</div>
-
 </body>
 </html>
