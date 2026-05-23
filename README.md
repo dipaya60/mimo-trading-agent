@@ -97,6 +97,30 @@ python main.py portfolio
 python main.py demo
 ```
 
+### Telegram Bot
+
+```bash
+# Set your Telegram bot token
+export TELEGRAM_BOT_TOKEN="your_bot_token"
+
+# Launch the bot
+python main.py bot
+
+# Or pass token directly
+python main.py bot --token "your_bot_token"
+```
+
+**Bot Commands:**
+- `/scan BTC ETH SOL` — Multi-asset signal scan
+- `/trade BTC 10000` — Auto-trade with position sizing
+- `/risk 10000` — Portfolio risk analysis
+- `/backtest BTC 90` — Backtest all strategies
+- `/montecarlo 10000` — Monte Carlo simulation
+- `/regime BTC` — Market regime detection
+- `/dca ETH 100` — Smart DCA order
+- `/portfolio` — Show open positions
+- `/market` — Market overview
+
 ### Docker
 
 ```bash

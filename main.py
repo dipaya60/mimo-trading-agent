@@ -281,6 +281,18 @@ def cmd_demo(args):
     console.print("[bold green]✅ Demo complete![/bold green]\n")
 
 
+def cmd_bot(args):
+    """Launch Telegram bot."""
+    import os
+    from src.telegram.bot import TradingBot
+    token = os.getenv("TELEGRAM_BOT_TOKEN", args.token)
+    if not token:
+        print("❌ Set TELEGRAM_BOT_TOKEN or use --token")
+        return
+    bot = TradingBot(token)
+    bot.run()
+
+
 def main():
     p = argparse.ArgumentParser(description="MiMo Trading Agent")
     sub = p.add_subparsers(dest="cmd")
@@ -334,6 +346,11 @@ def main():
     # Demo
     d = sub.add_parser("demo", help="Full demo")
     d.set_defaults(func=cmd_demo)
+
+    # Bot
+    bt_cmd = sub.add_parser("bot", help="Launch Telegram bot")
+    bt_cmd.add_argument("--token", default="", help="Telegram bot token")
+    bt_cmd.set_defaults(func=cmd_bot)
 
     args = p.parse_args()
     if not args.cmd:
