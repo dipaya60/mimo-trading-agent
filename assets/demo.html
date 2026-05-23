@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0d1117; color: #c9d1d9; font-family: 'SF Mono', 'Fira Code', monospace; padding: 30px; width: 1200px; }
+.header { background: linear-gradient(135deg, #1a1035, #0f1923); border: 1px solid #30363d; border-radius: 12px; padding: 20px 30px; margin-bottom: 20px; text-align: center; }
+.header h1 { color: #58a6ff; font-size: 22px; }
+.header p { color: #8b949e; font-size: 13px; margin-top: 5px; }
+.section { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+.section-title { color: #f0883e; font-size: 15px; font-weight: bold; margin-bottom: 12px; border-bottom: 1px solid #21262d; padding-bottom: 8px; }
+.market-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.market-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 10px; text-align: center; }
+.market-card .symbol { color: #e6edf3; font-weight: bold; font-size: 14px; }
+.market-card .price { color: #58a6ff; font-size: 18px; font-weight: bold; margin: 4px 0; }
+.market-card .change-pos { color: #3fb950; font-size: 12px; }
+.market-card .change-neg { color: #f85149; font-size: 12px; }
+.market-card .meta { color: #8b949e; font-size: 10px; }
+.signal-box { background: #0d1117; border: 2px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 10px; }
+.signal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.signal-header .asset { color: #e6edf3; font-size: 18px; font-weight: bold; }
+.signal-header .consensus { font-size: 20px; font-weight: bold; padding: 4px 16px; border-radius: 8px; }
+.consensus.buy { color: #3fb950; background: #0d2818; border: 1px solid #238636; }
+.consensus.sell { color: #f85149; background: #2d1214; border: 1px solid #da3633; }
+.consensus.hold { color: #8b949e; background: #1c1f24; border: 1px solid #30363d; }
+.strategy-row { display: grid; grid-template-columns: 150px 100px 60px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px solid #21262d; align-items: center; font-size: 12px; }
+.strategy-row .name { color: #e6edf3; font-weight: 600; }
+.strategy-row .signal { font-weight: bold; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+.signal-buy { color: #3fb950; background: #0d2818; }
+.signal-sell { color: #f85149; background: #2d1214; }
+.signal-hold { color: #8b949e; background: #1c1f24; }
+.strategy-row .conf { color: #58a6ff; text-align: center; }
+.strategy-row .reason { color: #8b949e; }
+.risk-panel { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 16px; }
+.risk-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.risk-header .title { color: #e6edf3; font-weight: bold; font-size: 14px; }
+.risk-header .score { font-size: 18px; font-weight: bold; padding: 4px 12px; border-radius: 8px; }
+.risk-low { color: #3fb950; background: #0d2818; }
+.risk-med { color: #d29922; background: #2d2106; }
+.risk-high { color: #f85149; background: #2d1214; }
+.risk-bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+.risk-bar-row .label { color: #8b949e; font-size: 11px; min-width: 110px; }
+.risk-bar-row .bar { flex: 1; height: 8px; background: #21262d; border-radius: 4px; overflow: hidden; }
+.risk-bar-row .fill { height: 100%; border-radius: 4px; }
+.risk-bar-row .val { color: #e6edf3; font-size: 11px; min-width: 30px; text-align: right; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.stat { text-align: center; background: #161b22; border-radius: 6px; padding: 8px; }
+.stat .label { color: #8b949e; font-size: 10px; text-transform: uppercase; }
+.stat .val { color: #e6edf3; font-size: 16px; font-weight: bold; }
+.trade-box { background: #0d1117; border: 1px solid #3fb950; border-radius: 8px; padding: 14px; margin-top: 10px; }
+.trade-header { display: flex; justify-content: space-between; align-items: center; }
+.trade-header .label { color: #3fb950; font-weight: bold; }
+.trade-header .detail { color: #e6edf3; font-size: 13px; }
+.trade-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+.status-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.status-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.dot-green { width: 8px; height: 8px; border-radius: 50%; background: #3fb950; }
+.dot-yellow { width: 8px; height: 8px; border-radius: 50%; background: #d29922; }
+.footer { text-align: center; padding: 15px; color: #8b949e; font-size: 12px; }
+.footer a { color: #58a6ff; text-decoration: none; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🤖 MiMo Trading Agent v2.0 — Automated Trading + Portfolio Risk Management</h1>
+  <p>Powered by Xiaomi MiMo-V2.5-Pro · 3-Strategy Consensus · 5-Dimension Risk · 8 Assets · 100T Token Creator Program</p>
+</div>
+
+<div class="section">
+  <div class="section-title">📊 MARKET DATA — 8 Assets Real-time</div>
+  <div class="market-grid">
+    <div class="market-card"><div class="symbol">BTC</div><div class="price">$104,500</div><div class="change-neg">-3.66%</div><div class="meta">Vol: $38B | RSI: 59</div></div>
+    <div class="market-card"><div class="symbol">ETH</div><div class="price">$2,520</div><div class="change-neg">-4.98%</div><div class="meta">Vol: $15B | RSI: 28</div></div>
+    <div class="market-card"><div class="symbol">SOL</div><div class="price">$174</div><div class="change-pos">+7.13%</div><div class="meta">Vol: $3.5B | RSI: 42</div></div>
+    <div class="market-card"><div class="symbol">BNB</div><div class="price">$652</div><div class="change-pos">+4.20%</div><div class="meta">Vol: $1.8B | RSI: 63</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🎯 MULTI-STRATEGY CONSENSUS — BTC Signal</div>
+  <div class="signal-box">
+    <div class="signal-header">
+      <span class="asset">BTC/USD</span>
+      <span class="consensus sell">🔴🔴 STRONG_SELL</span>
+    </div>
+    <div class="strategy-row"><span class="name">🏃 Momentum</span><span class="signal signal-sell">SELL</span><span class="conf">61%</span><span class="reason">Negative momentum: -3.2%. RSI 63 declining.</span></div>
+    <div class="strategy-row"><span class="name">🔄 Mean Reversion</span><span class="signal signal-hold">HOLD</span><span class="conf">35%</span><span class="reason">Neutral zone: RSI 63. No clear mean reversion setup.</span></div>
+    <div class="strategy-row"><span class="name">💥 Breakout</span><span class="signal signal-sell">SELL</span><span class="conf">50%</span><span class="reason">Approaching support $99,275. -3.2% decline risks breakdown.</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">⚡ AUTO-TRADE EXECUTION — ETH $10,000 Capital</div>
+  <div class="trade-box">
+    <div class="trade-header">
+      <span class="label">✅ LONG ETH @ $2,520.00</span>
+      <span class="detail">Confidence: 72% | Strategy: Momentum</span>
+    </div>
+    <div class="trade-stats">
+      <div class="stat"><div class="label">Position Size</div><div class="val" style="color:#58a6ff">$816.30</div></div>
+      <div class="stat"><div class="label">Stop Loss</div><div class="val" style="color:#f85149">$2,394.00</div></div>
+      <div class="stat"><div class="label">Take Profit</div><div class="val" style="color:#3fb950">$2,772.00</div></div>
+      <div class="stat"><div class="label">Risk/Reward</div><div class="val" style="color:#d2a8ff">2.0x</div></div>
+    </div>
+    <div style="margin-top:8px;color:#8b949e;font-size:11px">💡 Strong momentum: +7.2% with high volume ($15B). RSI 52 not overbought. Consensus: 2/3 strategies bullish.</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">🛡️ PORTFOLIO RISK MANAGER — 5 Dimensions</div>
+  <div class="risk-panel">
+    <div class="risk-header">
+      <span class="title">Portfolio Risk Report</span>
+      <span class="score risk-med">🟡 MEDIUM (31/100)</span>
+    </div>
+    <div class="risk-bar-row"><span class="label">Concentration</span><div class="bar"><div class="fill" style="width:41%;background:#d29922"></div></div><span class="val">41</span></div>
+    <div class="risk-bar-row"><span class="label">Volatility</span><div class="bar"><div class="fill" style="width:66%;background:#f85149"></div></div><span class="val">66</span></div>
+    <div class="risk-bar-row"><span class="label">Liquidity</span><div class="bar"><div class="fill" style="width:5%;background:#3fb950"></div></div><span class="val">0</span></div>
+    <div class="risk-bar-row"><span class="label">Correlation</span><div class="bar"><div class="fill" style="width:20%;background:#3fb950"></div></div><span class="val">20</span></div>
+    <div class="stats-grid">
+      <div class="stat"><div class="label">VaR (95%)</div><div class="val" style="color:#f85149">$67.75</div></div>
+      <div class="stat"><div class="label">Max Drawdown</div><div class="val" style="color:#d29922">46.5%</div></div>
+      <div class="stat"><div class="label">Sharpe Ratio</div><div class="val" style="color:#3fb950">1.38</div></div>
+      <div class="stat"><div class="label">Position Size</div><div class="val" style="color:#58a6ff">$816.30</div></div>
+    </div>
+    <div style="margin-top:10px;font-size:11px">
+      <div style="color:#d29922">⚠️ High portfolio volatility: 66/100</div>
+      <div style="color:#3fb950">💡 Consider hedging with stablecoins or reducing position sizes</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">⚙️ SYSTEM STATUS</div>
+  <div class="status-bar">
+    <div class="status-item"><span class="dot-green"></span> MiMo-V2.5-Pro: Connected</div>
+    <div class="status-item"><span class="dot-green"></span> Trading Engine: 3 strategies</div>
+    <div class="status-item"><span class="dot-green"></span> Risk Manager: 5 dimensions</div>
+    <div class="status-item"><span class="dot-yellow"></span> Price Feed: Demo mode</div>
+  </div>
+</div>
+
+<div class="footer">
+  📦 <a href="https://github.com/dipaya60/mimo-trading-agent">github.com/dipaya60/mimo-trading-agent</a> · Model: MiMo-V2.5-Pro · Agent: Hermes Agent · 100T Token Creator Program
+</div>
+</body>
+</html>
