@@ -3,8 +3,6 @@
 > **v2.0** — Automated Trading Bot + Portfolio Risk Manager  
 > Powered by **Xiaomi MiMo-V2.5-Pro** · Multi-Strategy Consensus · 8 Assets
 
-Built for the [100T Token Creator Incentive Program](https://100t.xiaomimimo.com/)
-
 ---
 
 ## The Problem
@@ -142,7 +140,7 @@ mimo-trading-agent/
 1. **Reasoning** — Explains *why* each trade signal is generated across 3 strategies
 2. **Risk Assessment** — Multi-dimensional portfolio risk with actionable recommendations
 3. **Structured Output** — Reliable JSON for programmatic execution
-4. **Cost Efficiency** — 100T program makes heavy daily scanning accessible
+4. **Cost Efficiency** — Free API tier makes heavy daily scanning accessible
 
 ---
 
@@ -173,6 +171,6 @@ MIT — see [LICENSE](LICENSE)
 
 [🌐 MiMo](https://mimo.xiaomi.com) · [📚 API Docs](https://platform.xiaomimimo.com/#/docs/welcome) · [🎮 Studio](https://aistudio.xiaomimimo.com)
 
-*100T Token Creator Incentive Program*
+
 
 </div>
